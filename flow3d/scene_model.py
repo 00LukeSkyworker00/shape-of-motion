@@ -288,14 +288,14 @@ class SceneModel(nn.Module):
             backgrounds = torch.nan_to_num(bg_color, nan=1.0)
 
             outputs = rasterization_2dgs(
-                means=means,
-                quats=quats,
-                scales=scales,
-                opacities=opacities,
-                colors=colors_override,
-                backgrounds=bg_color,
-                viewmats=curr_w2cs,  # [C, 4, 4]
-                Ks=Ks,  # [C, 3, 3]
+                means=means.float(),  # Ensure means is of type float32
+                quats=quats.float(),  # Ensure quats is of type float32
+                scales=scales.float(),  # Ensure scales is of type float32
+                opacities=opacities.float(),  # Ensure opacities is of type float32
+                colors=colors_override.float(),  # Ensure colors_override is of type float32
+                backgrounds=bg_color.float(),  # Ensure bg_color is of type float32
+                viewmats=curr_w2cs.float(),  # Ensure curr_w2cs is of type float32
+                Ks=Ks.float(),  # Ensure Ks is of type float32
                 width=W,
                 height=H,
                 packed=False,

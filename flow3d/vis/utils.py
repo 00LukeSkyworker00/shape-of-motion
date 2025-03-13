@@ -44,7 +44,7 @@ def project_2d_tracks(tracks_3d_w, Ks, T_cw, return_depth=False):
     tracks_3d_c = torch.einsum(
         "tij,tnj->tni", T_cw, F.pad(tracks_3d_w, (0, 1), value=1)
     )[..., :3]
-    tracks_3d_v = torch.einsum("tij,tnj->tni", Ks, tracks_3d_c)
+    tracks_3d_v = torch.einsum("tij,tnj->tni", Ks.float(), tracks_3d_c.float())
     if return_depth:
         return (
             tracks_3d_v[..., :2] / torch.clamp(tracks_3d_v[..., 2:], min=1e-5),

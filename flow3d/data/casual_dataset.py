@@ -59,7 +59,7 @@ class CustomDataConfig:
     data_dir: str
     start: int = 0
     end: int = -1
-    res: str = ""
+    res: str = "seq1"
     image_type: str = "images"
     mask_type: str = "masks"
     depth_type: Literal[
@@ -374,7 +374,7 @@ class CasualDataset(BaseDataset):
                     continue
                 # reproject into current frame
                 p2d = torch.einsum(
-                    "ij,jk,pk->pi", K, w2c[:3], F.pad(p3d, (0, 1), value=1.0)
+                    "ij,jk,pk->pi", K.float(), w2c[:3].float(), F.pad(p3d, (0, 1), value=1.0).float()
                 )
                 p2d = p2d[:, :2] / p2d[:, 2:].clamp(min=1e-6)
                 xmin, xmax = p2d[:, 0].min().item(), p2d[:, 0].max().item()
@@ -401,15 +401,15 @@ class CasualDataset(BaseDataset):
             points = (
                 torch.einsum(
                     "ij,pj->pi",
-                    torch.linalg.inv(K),
-                    F.pad(grid[bool_mask], (0, 1), value=1.0),
+                    torch.linalg.inv(K).float(),
+                    F.pad(grid[bool_mask], (0, 1), value=1.0).float(),
                 )
                 * depth[bool_mask][:, None]
             )
             points = torch.einsum(
-                "ij,pj->pi", torch.linalg.inv(w2c)[:3], F.pad(points, (0, 1), value=1.0)
+                "ij,pj->pi", torch.linalg.inv(w2c)[:3].float(), F.pad(points, (0, 1), value=1.0).float()
             )
-            point_normals = normal_from_depth_image(depth, K, w2c)[bool_mask]
+            point_normals = normal_from_depth_image(depth.float(), K.float(), w2c.float())[bool_mask]
             point_colors = img[bool_mask]
 
 

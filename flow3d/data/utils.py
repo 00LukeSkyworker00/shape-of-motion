@@ -112,12 +112,12 @@ def get_tracks_3d_for_query_frame(
     tracks_3d = (
         torch.einsum(
             "nij,npj->npi",
-            inv_Ks,
-            F.pad(tracks_2d, (0, 1), value=1.0),
+            inv_Ks.float(),
+            F.pad(tracks_2d, (0, 1), value=1.0).float(),
         )
         * track_depths[..., None]
     )
-    tracks_3d = torch.einsum("nij,npj->npi", c2ws, F.pad(tracks_3d, (0, 1), value=1.0))[
+    tracks_3d = torch.einsum("nij,npj->npi", c2ws.float(), F.pad(tracks_3d, (0, 1), value=1.0).float())[
         ..., :3
     ]
     # Filter out out-of-mask tracks.

@@ -367,7 +367,7 @@ class Trainer:
             rendered_all["tracks_3d"].permute(0, 3, 1, 2, 4).reshape(-1, H * W, 3)  # type: ignore
         )
         pred_tracks_2d = torch.einsum(
-            "bij,bpj->bpi", torch.cat(target_Ks), pred_tracks_3d
+            "bij,bpj->bpi", torch.cat(target_Ks).float(), pred_tracks_3d.float()
         )
         # (B * N, H * W, 1).
         mapped_depth = torch.clamp(pred_tracks_2d[..., 2:], min=1e-6)
