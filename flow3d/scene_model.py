@@ -314,14 +314,14 @@ class SceneModel(nn.Module):
         
         else:
             render_colors, alphas, info = rasterization(
-                means=means,
-                quats=quats,
-                scales=scales,
-                opacities=opacities,
-                colors=colors_override,
-                backgrounds=bg_color,
-                viewmats=curr_w2cs,  # [C, 4, 4]
-                Ks=Ks,  # [C, 3, 3]
+                means=means.float(),
+                quats=quats.float(),
+                scales=scales.float(),
+                opacities=opacities.float(),
+                colors=colors_override.float(),
+                backgrounds=bg_color.float(),
+                viewmats=curr_w2cs.float(),  # [C, 4, 4]
+                Ks=Ks.float(),  # [C, 3, 3]
                 width=W,
                 height=H,
                 packed=False,
