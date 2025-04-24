@@ -57,26 +57,26 @@ def process_sequence(
 ):
     dev_arg = f"CUDA_VISIBLE_DEVICES={gpu}"
 
-    metric_depth_cmd = (
-        f"{dev_arg} python compute_metric_depth.py --img-dir {img_dir} "
-        f"--depth-dir {metric_depth_dir} --intrins-file {intrins_name}.json"
-    )
-    subprocess.call(metric_depth_cmd, shell=True, executable="/bin/bash")
+    # metric_depth_cmd = (
+    #     f"{dev_arg} python compute_metric_depth.py --img-dir {img_dir} "
+    #     f"--depth-dir {metric_depth_dir} --intrins-file {intrins_name}.json"
+    # )
+    # subprocess.call(metric_depth_cmd, shell=True, executable="/bin/bash")
 
-    mono_depth_cmd = (
-        f"{dev_arg} python compute_depth.py --img_dir {img_dir} "
-        f"--out_raw_dir {mono_depth_dir} --out_aligned_dir {aligned_depth_dir} "
-        f"--model {depth_model} --metric_dir {metric_depth_dir}"
-    )
-    print(mono_depth_cmd)
-    subprocess.call(mono_depth_cmd, shell=True, executable="/bin/bash")
+    # mono_depth_cmd = (
+    #     f"{dev_arg} python compute_depth.py --img_dir {img_dir} "
+    #     f"--out_raw_dir {mono_depth_dir} --out_aligned_dir {aligned_depth_dir} "
+    #     f"--model {depth_model} --metric_dir {metric_depth_dir}"
+    # )
+    # print(mono_depth_cmd)
+    # subprocess.call(mono_depth_cmd, shell=True, executable="/bin/bash")
 
-    slam_cmd = (
-        f"{dev_arg} python recon_with_depth.py --img_dir {img_dir} "
-        f"--calib {intrins_name}.json --depth_dir {aligned_depth_dir} --out_path {slam_path}"
-    )
-    print(slam_cmd)
-    subprocess.call(slam_cmd, shell=True, executable="/bin/bash")
+    # slam_cmd = (
+    #     f"{dev_arg} python recon_with_depth.py --img_dir {img_dir} "
+    #     f"--calib {intrins_name}.json --depth_dir {aligned_depth_dir} --out_path {slam_path}"
+    # )
+    # print(slam_cmd)
+    # subprocess.call(slam_cmd, shell=True, executable="/bin/bash")
 
     track_script = "compute_tracks_torch.py" if tapir_torch else "compute_tracks_jax.py"
     track_cmd = (
