@@ -55,7 +55,7 @@ def process_sequence(
     track_model: str = "bootstapir",
     tapir_torch: bool = True,
 ):
-    dev_arg = f"CUDA_VISIBLE_DEVICES={gpu}"
+    dev_arg = f""
 
     # metric_depth_cmd = (
     #     f"{dev_arg} python compute_metric_depth.py --img-dir {img_dir} "

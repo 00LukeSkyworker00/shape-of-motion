@@ -31,3 +31,4 @@ cucim-cu11==24.6.*
 pylibraft-cu11==24.6.*
 raft-dask-cu11==24.6.*
 cuvs-cu11==24.6.*
+git+https://github.com/nerfstudio-project/gsplat.git@640a4fe546f5cadd8835acf259fce9a672ffecf4
