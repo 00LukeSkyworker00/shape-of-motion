@@ -15,6 +15,7 @@ args = parser.parse_args()
 
 ano_dir = os.path.join(args.data_dir,'ano')
 ano = [f for f in os.listdir(ano_dir) if f.endswith('.png')]
+ano = sorted(ano)
 annotations = []
 for png in ano:
     ano_path = os.path.join(ano_dir, png)
